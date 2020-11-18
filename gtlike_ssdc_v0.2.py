@@ -205,6 +205,7 @@ if gta.roi.sources[0]._data['offset']>gta.roi.sources[0]._data['pos_r99']:
             outfile.write('\n95% confidence energy flux upper limit\t:\t'+str(1.6021766e-6*gta.roi.sources[0]._data['eflux_ul95'])+' erg/cm**2/s')
         else:
             outfile.write('\nEnergy flux in cgs units\t:\t'+str(1.6021766e-6*gta.roi.sources[0]._data['eflux'])+' +\- '+str(1.6021766e-6*gta.roi.sources[0]._data['eflux_err'])+' erg/cm**2/s')
+        outfile.write('\nTime range of the analysis (MET): %d - %d'%(tstart,tstop))
         outfile.close()
         gta.write_roi('fit_final_'+ID, make_plots = True)
 else:
@@ -224,6 +225,7 @@ else:
         outfile.write('\n95% error circle\t:\t'+str(gta.roi.sources[0]._data['pos_r95'])+' degrees')
         outfile.write('\n99% error circle\t:\t'+str(gta.roi.sources[0]._data['pos_r99'])+' degrees')
     outfile.write('\nROI center offset\t:\t'+str(gta.roi.sources[0]._data['offset'])+' degrees')
+    outfile.write('\nTime range of the analysis (MET): %d - %d'%(tstart,tstop))
     outfile.close()
     print gta.roi.sources[0]
     e_min = gta.config['selection']['emin']
@@ -278,10 +280,9 @@ if probs_e2 != []:
     outfile.close()
 
 
-    
 #cleaning up
 for cleanup in glob('*.*'):
-    if 'fit_final' not in cleanup and 'gtlike' not in cleanup:
+    if 'fit_final' not in cleanup and 'gtlike' not in cleanup and 'sed' not in cleanup and 'counts_map' not in cleanup:
         os.remove(cleanup)
 
 
