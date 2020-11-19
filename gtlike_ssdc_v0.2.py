@@ -1,4 +1,5 @@
 import numpy as np
+from astropy.time import Time # It appears in this way on the server  
 from fermipy.gtanalysis import GTAnalysis
 from astropy.io import fits
 from astropy.io import ascii
