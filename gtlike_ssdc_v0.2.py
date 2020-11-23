@@ -161,6 +161,11 @@ for s in gta.roi.sources:
         if s.name != 'isodiff' and s.name != 'galdiff' and s['ts']>25 and s['offset']<3.:
                 soi = s.name
                 loc=gta.localize(soi, update=True, free_radius=1)
+                if loc['fit_success'] == False:
+                    loc=gta.localize(soi, update=True, free_radius=0.5)
+                    if loc['fit_success'] == False:
+                        loc=gta.localize(soi, update=True, free_radius=0.25)
+                    
 
 fit_res = gta.optimize()
 
