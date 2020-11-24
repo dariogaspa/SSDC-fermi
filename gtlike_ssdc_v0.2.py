@@ -153,6 +153,14 @@ fit_res = gta.fit()
 #write output
 gta.write_roi('fit_srcfind_'+ID)
 
+#deleting non-significant sources
+for s in gta.roi.sources:
+    if s.name != 'isodiff' and s.name != 'galdiff' and s['ts'] < 1:
+        gta.delete_source(s.name)
+
+fit_res = gta.optimize()
+
+gta.write_roi('fit_srcfind_del_'+ID)
 
 
 #localize new sources and add to ds9 region file with error circles
@@ -168,6 +176,7 @@ for s in gta.roi.sources:
                     
 
 fit_res = gta.optimize()
+
 
 gta.write_roi('fit_srcfind_loc_'+ID)
 
@@ -219,7 +228,7 @@ else:
     gta.free_source(gta.roi.sources[0].name)
     fit_res = gta.optimize()
     fit_res = gta.fit()
-    gta.write_roi('fit_final_'+ID)
+    gta.write_roi('fit_final_'+ID, make_plots = True)
     outfile=open(ID+'_gtlike.txt','w')
     outfile.write('ROI data for source close to target:\n')
     outfile.write(str(gta.roi.sources[0]))
