@@ -258,7 +258,18 @@ else:
             sed_bin_edges[i] = sed_bin_edges[i-1]+binsz_sed
         sed_bin_edges[-1]=np.log10(e_max)
         sed = gta.sed(srcname,loge_bins=sed_bin_edges, make_plots=True)
-
+        hmev = u.J.to(u.MeV,const.h)
+        freqarr = sed['e_ref']/hmev
+        freqErrArr = (sed['e_max']-sed['e_min'])/(2.*hmev)
+        for i in xrange(0,len(sed)):
+            if sed['ts'][i] > 4. and sed['e2dnde'][i]/sed['e2dnde_err'][i] > 1.:
+                sedFlux = u.MeV.to(u.erg,sed['e2dnde'][i]))
+                sedFluxErr = u.MeV.to(u.erg,sed['e2dnde_err'][i]))
+                sedfile.write('%f | %f | %f | %f | %f | %f | %f | %f | |'%(srcRA, srcDec, freqarr[i], freqErrArr[i], sedFlux, sedFluxErr, 51910.0+tstart/86400., 51910.0+tstop/86400.))
+           else:
+                sedFlux = u.MeV.to(u.erg,sed['e2dnde_ul95'][i]))
+                sedfile.write('%f | %f | %f | %f | %f | | %f | %f | UL |'%(srcRA, srcDec, freqarr[i], freqErrArr[i], sedFlux, 51910.0+tstart/86400., 51910.0+tstop/86400.))
+        sedfile.close()
 
 print '###########################'
 print '# Computing HE photons... #'
