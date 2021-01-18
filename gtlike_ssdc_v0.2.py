@@ -5,6 +5,7 @@ from astropy.io import fits
 from astropy.io import ascii
 from astropy.coordinates import SkyCoord
 import astropy.units as u
+from astropy import constants as const
 from glob import glob
 import os
 import sys
@@ -263,11 +264,11 @@ else:
         freqErrArr = (sed['e_max']-sed['e_min'])/(2.*hmev)
         for i in xrange(0,len(sed)):
             if sed['ts'][i] > 4. and sed['e2dnde'][i]/sed['e2dnde_err'][i] > 1.:
-                sedFlux = u.MeV.to(u.erg,sed['e2dnde'][i]))
-                sedFluxErr = u.MeV.to(u.erg,sed['e2dnde_err'][i]))
+                sedFlux = u.MeV.to(u.erg,sed['e2dnde'][i])
+                sedFluxErr = u.MeV.to(u.erg,sed['e2dnde_err'][i])
                 sedfile.write('%f | %f | %f | %f | %f | %f | %f | %f | |'%(srcRA, srcDec, freqarr[i], freqErrArr[i], sedFlux, sedFluxErr, 51910.0+tstart/86400., 51910.0+tstop/86400.))
-           else:
-                sedFlux = u.MeV.to(u.erg,sed['e2dnde_ul95'][i]))
+            else:
+                sedFlux = u.MeV.to(u.erg,sed['e2dnde_ul95'][i])
                 sedfile.write('%f | %f | %f | %f | %f | | %f | %f | UL |'%(srcRA, srcDec, freqarr[i], freqErrArr[i], sedFlux, 51910.0+tstart/86400., 51910.0+tstop/86400.))
         sedfile.close()
 
