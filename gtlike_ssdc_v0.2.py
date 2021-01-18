@@ -262,6 +262,7 @@ else:
         hmev = u.J.to(u.MeV,const.h)
         freqarr = sed['e_ref']/hmev
         freqErrArr = (sed['e_max']-sed['e_min'])/(2.*hmev)
+        sedfile = open(ID+'_SED.txt', 'w')
         for i in xrange(0,len(sed)):
             if sed['ts'][i] > 4. and sed['e2dnde'][i]/sed['e2dnde_err'][i] > 1.:
                 sedFlux = u.MeV.to(u.erg,sed['e2dnde'][i])
