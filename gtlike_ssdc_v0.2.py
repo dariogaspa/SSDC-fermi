@@ -267,10 +267,10 @@ else:
             if sed['ts'][i] > 4. and sed['e2dnde'][i]/sed['e2dnde_err'][i] > 1.:
                 sedFlux = u.MeV.to(u.erg,sed['e2dnde'][i])
                 sedFluxErr = u.MeV.to(u.erg,sed['e2dnde_err'][i])
-                sedfile.write('%f | %f | %f | %f | %f | %f | %f | %f | |'%(srcRA, srcDec, freqarr[i], freqErrArr[i], sedFlux, sedFluxErr, 51910.0+tstart/86400., 51910.0+tstop/86400.))
+                sedfile.write('%f | %f | %f | %f | %f | %f | %f | %f | |'%(float(srcRA), float(srcDec), freqarr[i].value, freqErrArr[i].value, float(sedFlux), float(sedFluxErr), 51910.0+float(tstart)/86400., 51910.0+float(tstop)/86400.))
             else:
                 sedFlux = u.MeV.to(u.erg,sed['e2dnde_ul95'][i])
-                sedfile.write('%f | %f | %f | %f | %f | | %f | %f | UL |'%(srcRA, srcDec, freqarr[i], freqErrArr[i], sedFlux, 51910.0+tstart/86400., 51910.0+tstop/86400.))
+                sedfile.write('%f | %f | %f | %f | %f | | %f | %f | UL |'%(float(srcRA), float(srcDec), freqarr[i].value, freqErrArr[i].value, float(sedFlux), 51910.0+float(tstart)/86400., 51910.0+float(tstop)/86400.))
         sedfile.close()
 
 print '###########################'
